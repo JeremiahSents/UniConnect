@@ -1,9 +1,9 @@
-package com.sentomero.sufeeds.sents_sufeeds;
+package com.sentomero.sufeeds.sents_sufeeds.Controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HelloController {
+public class LoginController {
     @FXML
     private Label welcomeText;
 

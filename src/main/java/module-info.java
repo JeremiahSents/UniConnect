@@ -7,4 +7,6 @@ module com.sentomero.sufeeds.sents_sufeeds {
 
     opens com.sentomero.sufeeds.sents_sufeeds to javafx.fxml;
     exports com.sentomero.sufeeds.sents_sufeeds;
+    exports com.sentomero.sufeeds.sents_sufeeds.Controllers;
+    opens com.sentomero.sufeeds.sents_sufeeds.Controllers to javafx.fxml;
 }
