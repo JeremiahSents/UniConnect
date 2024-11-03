@@ -21,6 +21,12 @@
             <version>22.0.1</version>
         </dependency>
         <dependency>
+            <groupId>de.jensd</groupId>
+            <artifactId>fontawesomefx</artifactId>
+            <version>8.9</version> <!-- Ensure this version exists -->
+        </dependency>
+
+        <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
             <version>22.0.1</version>

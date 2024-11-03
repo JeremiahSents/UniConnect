@@ -4,6 +4,7 @@ module com.sentomero.sufeeds.sents_sufeeds {
 
     requires com.dlsc.formsfx;
     requires org.kordamp.bootstrapfx.core;
+    requires fontawesomefx;
 
     opens com.sentomero.sufeeds.sents_sufeeds to javafx.fxml;
     exports com.sentomero.sufeeds.sents_sufeeds;
