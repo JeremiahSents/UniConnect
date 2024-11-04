@@ -1,0 +1,110 @@
+/* Root styles */
+.root {
+    -fx-background-color: #f8f9fa;
+    -fx-font-family: 'Segoe UI', sans-serif;
+}
+
+/* Navigation container styles */
+.nav-container {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);
+    -fx-min-width: 100px;
+    -fx-pref-width: 100px;
+    -fx-max-width: 100px;
+}
+
+/* Sidebar navigation styles */
+.sidenav {
+    -fx-background-color: white;
+    -fx-padding: 20px 10px;
+    -fx-spacing: 15;
+    -fx-alignment: top-center;
+}
+
+/* Navigation item styles */
+.nav-item {
+    -fx-background-color: transparent;
+    -fx-min-height: 60px;
+    -fx-min-width: 60px;
+    -fx-cursor: hand;
+    -fx-background-radius: 10px;
+}
+
+.nav-item:hover {
+    -fx-background-color: derive(#886464, 90%);
+}
+
+.nav-icon {
+    -fx-fill: #886464;
+}
+
+.nav-item:hover .nav-icon {
+    -fx-fill: derive(#886464, -10%);
+}
+
+/* Main content area */
+.main-content {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 20px;
+}
+
+/* ScrollPane customization */
+.feed-scroll {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-border-width: 0;
+}
+
+.feed-scroll > .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Scrollbar styling */
+.feed-scroll .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 12;
+    -fx-padding: 0 4;
+}
+
+.feed-scroll .scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+}
+
+.feed-scroll .scroll-bar:vertical .thumb {
+    -fx-background-color: #886464;
+    -fx-background-radius: 6;
+    -fx-opacity: 0.6;
+}
+
+.feed-scroll .scroll-bar:vertical .thumb:hover {
+    -fx-opacity: 0.8;
+}
+
+.feed-scroll .scroll-bar .increment-button,
+.feed-scroll .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.feed-scroll .scroll-bar .increment-arrow,
+.feed-scroll .scroll-bar .decrement-arrow {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+/* Feed container styles */
+.feed {
+    -fx-background-color: transparent;
+    -fx-padding: 20px;
+    -fx-spacing: 15;
+    -fx-alignment: top-center;
+    -fx-min-width: 600px;
+    -fx-pref-width: 600px;
+    -fx-max-width: 800px;
+}
+
+/* Add this if you want to center the feed container */
+.feed-scroll > .viewport > AnchorPane {
+    -fx-background-color: transparent;
+}

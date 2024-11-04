@@ -33,10 +33,9 @@
         <!-- FontAwesomeFX - Updated to newer version -->
         <dependency>
             <groupId>de.jensd</groupId>
-            <artifactId>fontawesomefx-fontawesome</artifactId>
-            <version>4.7.0-9.1.2</version>
+            <artifactId>fontawesomefx</artifactId>
+            <version>8.9</version>
         </dependency>
-
         <!-- Forms FX -->
         <dependency>
             <groupId>com.dlsc.formsfx</groupId>
@@ -73,6 +72,11 @@
     </dependencies>
 
     <build>
+            <resources>
+                <resource>
+                    <directory>src/main/resources</directory>
+                </resource>
+            </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -88,7 +92,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                com.sentomero.sufeeds.sents_sufeeds/com.sentomero.sufeeds.sents_sufeeds.HelloApplication
+                                com.sentomero.sufeeds.sents_sufeeds/com.sentomero.sufeeds.sents_sufeeds.Main
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
