@@ -7,47 +7,47 @@
 <?import javafx.scene.layout.VBox?>
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" styleClass="root" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sentomero.sufeeds.sents_sufeeds.Controllers.FeedController">
-   <children>
-      <AnchorPane prefHeight="200.0" prefWidth="100.0" styleClass="nav-container">
-         <children>
-            <VBox layoutX="10.0" prefHeight="600.0" prefWidth="80.0" styleClass="sidenav">
-               <children>
-                  <AnchorPane fx:id="profileNav" prefHeight="60.0" prefWidth="60.0" styleClass="nav-item">
-                     <children>
-                        <FontAwesomeIcon fill="#886464" glyphName="USER" layoutX="31.0" layoutY="54.0" size="2em" styleClass="nav-icon" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="homeNav" prefHeight="60.0" prefWidth="60.0" styleClass="nav-item">
-                     <children>
-                        <FontAwesomeIcon fill="#886464" glyphName="HOME" layoutX="29.0" layoutY="54.0" size="2em" styleClass="nav-icon" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="createPostNav" prefHeight="60.0" prefWidth="60.0" styleClass="nav-item">
-                     <children>
-                        <FontAwesomeIcon fill="#886464" glyphName="PLUS_CIRCLE" layoutX="29.0" layoutY="54.0" size="2em" styleClass="nav-icon" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="usersNav" prefHeight="60.0" prefWidth="60.0" styleClass="nav-item">
-                     <children>
-                        <FontAwesomeIcon fill="#886464" glyphName="USERS" layoutX="29.0" layoutY="54.0" size="2em" styleClass="nav-icon" />
-                     </children>
-                  </AnchorPane>
-               </children>
-            </VBox>
-         </children>
-      </AnchorPane>
-      <AnchorPane prefHeight="600.0" prefWidth="800.0" styleClass="main-content">
-         <children>
-            <ScrollPane fitToWidth="true" layoutX="247.0" layoutY="79.0" prefHeight="200.0" prefWidth="200.0" styleClass="feed-scroll" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
-                     <children>
-                        <VBox fx:id="feedContainer" layoutX="185.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" styleClass="feed" />
-                     </children>
-                  </AnchorPane>
-              </content>
-            </ScrollPane>
-         </children>
-      </AnchorPane>
-   </children>
+    <children>
+        <AnchorPane prefHeight="200.0" prefWidth="100.0" styleClass="nav-container">
+            <children>
+                <VBox layoutX="10.0" prefHeight="600.0" prefWidth="80.0" styleClass="sidenav">
+                    <children>
+                        <AnchorPane fx:id="profileNav" prefHeight="60.0" prefWidth="60.0" styleClass="nav-item">
+                            <children>
+                                <FontAwesomeIcon fill="#886464" glyphName="USER" layoutX="31.0" layoutY="54.0" size="2em" styleClass="nav-icon" />
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="homeNav" prefHeight="60.0" prefWidth="60.0" styleClass="nav-item">
+                            <children>
+                                <FontAwesomeIcon fill="#886464" glyphName="HOME" layoutX="29.0" layoutY="54.0" size="2em" styleClass="nav-icon" />
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="createPostNav" prefHeight="60.0" prefWidth="60.0" styleClass="nav-item">
+                            <children>
+                                <FontAwesomeIcon fill="#886464" glyphName="PLUS_CIRCLE" layoutX="29.0" layoutY="54.0" size="2em" styleClass="nav-icon" />
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="usersNav" prefHeight="60.0" prefWidth="60.0" styleClass="nav-item">
+                            <children>
+                                <FontAwesomeIcon fill="#886464" glyphName="USERS" layoutX="29.0" layoutY="54.0" size="2em" styleClass="nav-icon" />
+                            </children>
+                        </AnchorPane>
+                    </children>
+                </VBox>
+            </children>
+        </AnchorPane>
+        <AnchorPane prefHeight="600.0" prefWidth="800.0" styleClass="main-content">
+            <children>
+                <ScrollPane fitToWidth="true" layoutX="247.0" layoutY="79.0" prefHeight="200.0" prefWidth="200.0" styleClass="feed-scroll" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+                            <children>
+                                <VBox fx:id="feedContainer" layoutX="185.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" styleClass="feed" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </ScrollPane>
+            </children>
+        </AnchorPane>
+    </children>
 </HBox>

@@ -1,55 +1,38 @@
 package com.sentomero.sufeeds.sents_sufeeds.Controllers;
 
-import com.sentomero.sufeeds.sents_sufeeds.Utilities.DatabaseConnection;
+
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class LoginController {
 
+public class LoginController implements Initializable {
+@FXML
+    private Label usernameLabel;
     @FXML
-    private TextField usernameField;
+private  Label passwordLabel;
     @FXML
-    private PasswordField passwordField;
-
+private TextField usernameField;
     @FXML
-    private void handleLoginButtonAction(ActionEvent event) throws SQLException {
-        String username = usernameField.getText();
-        String password = passwordField.getText();
+private PasswordField passwordField;
+    @FXML
+    private Hyperlink registerLink;
 
-        if (username.isEmpty() || password.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Please fill in all fields");
-            return;
-        }
-        try (Connection conn = DatabaseConnection.getConnection()) {
-            String query = "SELECT * FROM users WHERE username = ? AND password = ?";
-            PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, username);
-            pstmt.setString(2, password);
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        registerLink.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
 
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                showAlert(Alert.AlertType.INFORMATION, "Success", "Login successful!");
-                // Add code to navigate to main application screen
-            } else {
-                showAlert(Alert.AlertType.ERROR, "Error", "Invalid username or password");
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Error", "Database error occurred");
-        }
-    }
-    private void showAlert(Alert.AlertType type, String title, String content) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setContentText(content);
-        alert.showAndWait();
+        });
     }
 }

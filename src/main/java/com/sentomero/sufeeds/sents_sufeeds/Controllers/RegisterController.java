@@ -44,44 +44,44 @@ public class RegisterController {
         setupYearMenuButton();
         setupFieldValidations();
     }
-
+    @FXML
     public void loadCoursesFromDatabase() {
-        try (Connection conn = DatabaseConnection.getConnection()) {
-            // Updated query to include course_id and department
-            String query = "SELECT course_id, course_name, department FROM Courses ORDER BY course_name";
-            PreparedStatement pstmt = conn.prepareStatement(query);
-            ResultSet rs = pstmt.executeQuery();
+        // Clear existing items
+        courseMenuButton.getItems().clear();
 
-            courseMenuButton.getItems().clear();
-            boolean coursesFound = false;
+        // Define courses exactly as they are in your database
+        String[][] courses = {
+                {"CSCI101", "Bachelor of Computer Science and Informatics", "School of Computing and Engineering (SCES)"},
+                {"CYBN101", "Bachelor of Cybersecurity and Computer Networks", "School of Computing and Engineering (SCES)"},
+                {"BBIT101", "Bachelor of Business Information Technology", "School of Computing and Engineering (SCES)"},
+                {"FENG101", "Bachelor of Financial Engineering", "School of Mathematical Sciences (SIMS)"},
+                {"FECO101", "Bachelor of Financial Economics", "School of Mathematical Sciences (SIMS)"},
+                {"HHM101", "Bachelor of Hospitality and Hotel Management", "School of Humanities"},
+                {"BCOM101", "Bachelor of Commerce", "School of Humanities"},
+                {"IR101", "Bachelor of International Relations", "School of Humanities"}
+        };
 
-            while (rs.next()) {
-                coursesFound = true;
-                String courseId = rs.getString("course_id");
-                String courseName = rs.getString("course_name");
-                String department = rs.getString("department");
+        // Create menu items for each course
+        for (String[] course : courses) {
+            String courseId = course[0];
+            String courseName = course[1];
+            String department = course[2];
 
-                // Create a more informative menu item
-                MenuItem item = new MenuItem(String.format("%s - %s (%s)", courseId, courseName, department));
+            MenuItem item = new MenuItem(String.format("%s - %s (%s)", courseId, courseName, department));
 
-                // When selected, store both the ID and name but show a cleaner display text
-                item.setOnAction(e -> {
-                    courseMenuButton.setText(courseName);  // Show only the course name in the button
-                    courseMenuButton.setUserData(courseId);  // Store the course ID for database operations
-                });
+            item.setOnAction(e -> {
+                courseMenuButton.setText(courseName);  // Show only the course name in the button
+                courseMenuButton.setUserData(courseId);  // Store the course ID for database operations
+            });
 
-                courseMenuButton.getItems().add(item);
-            }
+            courseMenuButton.getItems().add(item);
+        }
 
-            if (!coursesFound) {
-                MenuItem noCoursesItem = new MenuItem("No courses available");
-                noCoursesItem.setDisable(true);
-                courseMenuButton.getItems().add(noCoursesItem);
-                logger.warning("No courses found in the database");
-            }
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Failed to load courses", e);
-            showAlert(Alert.AlertType.ERROR, "Error", "Failed to load courses from database");
+        if (courseMenuButton.getItems().isEmpty()) {
+            MenuItem noCoursesItem = new MenuItem("No courses available");
+            noCoursesItem.setDisable(true);
+            courseMenuButton.getItems().add(noCoursesItem);
+            logger.warning("No courses found");
         }
     }
 
@@ -269,19 +269,17 @@ public class RegisterController {
 
     private boolean registerUser(User user) {
         try (Connection conn = DatabaseConnection.getConnection()) {
-            String query = "INSERT INTO users (first_name, last_name, date_of_birth, " +
-                    "course, year_of_study, username, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO Users (first_name, last_name, date_of_birth, year_of_study, course_of_study, username, password) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setString(1, user.getFirstName());
             pstmt.setString(2, user.getLastName());
-            pstmt.setString(3, user.getDateOfBirth());
-            // Get the course ID that was stored in userData
-            String courseId = (String) courseMenuButton.getUserData();
-            pstmt.setString(4, courseId);  // Store course_id instead of course_name
-            pstmt.setString(5, user.getYearOfStudy());
+            pstmt.setDate(3, java.sql.Date.valueOf(user.getDateOfBirth())); // Use java.sql.Date for the date
+            pstmt.setInt(4, Integer.parseInt(user.getYearOfStudy())); // Assuming year_of_study is an int
+            pstmt.setString(5, (String) courseMenuButton.getUserData()); // Get course of study
             pstmt.setString(6, user.getUsername());
-            pstmt.setString(7, user.getPassword());
+            pstmt.setString(7, user.getPassword()); // Consider hashing this
 
             int affectedRows = pstmt.executeUpdate();
             return affectedRows > 0;
@@ -290,6 +288,7 @@ public class RegisterController {
             return false;
         }
     }
+
 
     @FXML
     private void navigateToLogin() {
