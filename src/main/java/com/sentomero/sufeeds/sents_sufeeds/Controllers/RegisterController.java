@@ -47,20 +47,41 @@ public class RegisterController {
 
     public void loadCoursesFromDatabase() {
         try (Connection conn = DatabaseConnection.getConnection()) {
-            String query = "SELECT course_name FROM courses ORDER BY course_name";
+            // Updated query to include course_id and department
+            String query = "SELECT course_id, course_name, department FROM Courses ORDER BY course_name";
             PreparedStatement pstmt = conn.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
 
             courseMenuButton.getItems().clear();
+            boolean coursesFound = false;
+
             while (rs.next()) {
+                coursesFound = true;
+                String courseId = rs.getString("course_id");
                 String courseName = rs.getString("course_name");
-                MenuItem item = new MenuItem(courseName);
-                item.setOnAction(e -> courseMenuButton.setText(courseName));
+                String department = rs.getString("department");
+
+                // Create a more informative menu item
+                MenuItem item = new MenuItem(String.format("%s - %s (%s)", courseId, courseName, department));
+
+                // When selected, store both the ID and name but show a cleaner display text
+                item.setOnAction(e -> {
+                    courseMenuButton.setText(courseName);  // Show only the course name in the button
+                    courseMenuButton.setUserData(courseId);  // Store the course ID for database operations
+                });
+
                 courseMenuButton.getItems().add(item);
+            }
+
+            if (!coursesFound) {
+                MenuItem noCoursesItem = new MenuItem("No courses available");
+                noCoursesItem.setDisable(true);
+                courseMenuButton.getItems().add(noCoursesItem);
+                logger.warning("No courses found in the database");
             }
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Failed to load courses", e);
-            showAlert(Alert.AlertType.ERROR, "Error", "Failed to load courses");
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to load courses from database");
         }
     }
 
@@ -239,7 +260,7 @@ public class RegisterController {
                 firstNameField.getText(),
                 lastNameField.getText(),
                 dobField.getText(),
-                courseMenuButton.getText(),
+                (String) courseMenuButton.getUserData(),  // Get the stored course ID
                 yearMenuButton.getText(),
                 usernameField.getText(),
                 passwordField.getText()
@@ -255,10 +276,12 @@ public class RegisterController {
             pstmt.setString(1, user.getFirstName());
             pstmt.setString(2, user.getLastName());
             pstmt.setString(3, user.getDateOfBirth());
-            pstmt.setString(4, user.getCourse());
+            // Get the course ID that was stored in userData
+            String courseId = (String) courseMenuButton.getUserData();
+            pstmt.setString(4, courseId);  // Store course_id instead of course_name
             pstmt.setString(5, user.getYearOfStudy());
             pstmt.setString(6, user.getUsername());
-            pstmt.setString(7, user.getPassword()); // In production, use password hashing!
+            pstmt.setString(7, user.getPassword());
 
             int affectedRows = pstmt.executeUpdate();
             return affectedRows > 0;
