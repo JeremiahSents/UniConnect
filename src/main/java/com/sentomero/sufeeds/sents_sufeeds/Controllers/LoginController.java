@@ -1,14 +1,12 @@
 package com.sentomero.sufeeds.sents_sufeeds.Controllers;
 
 
+import com.sentomero.sufeeds.sents_sufeeds.Utilities.DatabaseConnection;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,14 +23,23 @@ private TextField usernameField;
 private PasswordField passwordField;
     @FXML
     private Hyperlink registerLink;
+    @FXML
+    private Button loginButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        registerLink.setOnAction(new EventHandler<ActionEvent>() {
+        loginButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-
+                DatabaseConnection.loginUser(actionEvent,usernameField.getText(),passwordField.getText());
             }
         });
+   registerLink.setOnAction(new EventHandler<ActionEvent>() {
+       @Override
+       public void handle(ActionEvent event) {
+           DatabaseConnection.changeScene(event, "/com/sentomero/sufeeds/Views/Register.fxml", "null");
+       }
+   });
+
     }
 }
