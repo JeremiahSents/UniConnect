@@ -6,13 +6,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sentomero.sufeeds.sents_sufeeds.Controllers.Homepage">
    <children>
       <AnchorPane prefHeight="49.0" prefWidth="171.0">
          <children>
             <Label fx:id="welcomeLabel" layoutX="28.0" layoutY="14.0" prefHeight="17.0" prefWidth="143.0" text="Welcome, " />
-            <Label fx:id="usernameLabels" layoutX="86.0" layoutY="14.0" text="Username" />
             <FontAwesomeIcon fx:id="homeIcon" glyphName="HOME" layoutX="107.0" layoutY="204.0" size="3em" />
             <Button fx:id="feedButton" layoutX="103.0" layoutY="226.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Feed" underline="true" />
          </children>

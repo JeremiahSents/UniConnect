@@ -31,7 +31,7 @@ public class Homepage implements Initializable {
   closeButton.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent actionEvent) {
-          DatabaseConnection.changeScene(actionEvent,"Login.fxml","null");
+          DatabaseConnection.changeScene(actionEvent,"Login.fxml","Register Page");
       }
   });
     }

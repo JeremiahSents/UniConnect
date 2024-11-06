@@ -7,6 +7,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.net.URL;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ResourceBundle;
 
 public class RegisterController implements Initializable {
@@ -61,29 +65,74 @@ public class RegisterController implements Initializable {
         String[] years = {"1st Year", "2nd Year", "3rd Year", "4th Year"};
         for (String year : years) {
             MenuItem yearItem = new MenuItem(year);
-            yearItem.setOnAction(e -> yearMenuButton.setText(year));  // Display the selected year on the button
+            yearItem.setOnAction(e -> yearMenuButton.setText(year));
             yearMenuButton.getItems().add(yearItem);
         }
 
         // Register button action
-        registerButton.setOnAction(event -> {
-            String selectedCourseId = (String) courseMenuButton.getUserData();  // Retrieve the selected course ID
-            String selectedYear = yearMenuButton.getText();  // Retrieve the selected year
+        registerButton.setOnAction(this::handleRegistration);
+    }
 
-            if (selectedCourseId == null || selectedYear.equals("Select Year")) {
-                showAlert("Please select both a course and a year.", Alert.AlertType.WARNING);
-            } else {
-                System.out.println("Selected Course ID: " + selectedCourseId);
-                System.out.println("Selected Year: " + selectedYear);
-                // Additional code to save user data, including selected course and year, to the database
-            }
-        });
-
-        if (!usernameField.getText().trim().isEmpty() && !passwordField.getText().trim().isEmpty()) {
-            DatabaseConnection.signUp(new ActionEvent(), usernameField.getText(), passwordField.getText());
-        } else {
+    private void handleRegistration(ActionEvent event) {
+        // Validate all fields are filled
+        if (!validateFields()) {
             showAlert("Please fill in all necessary details.", Alert.AlertType.ERROR);
+            return;
         }
+
+        // Validate passwords match
+        if (!passwordField.getText().equals(confirmPasswordField.getText())) {
+            showAlert("Passwords do not match.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        try {
+            // Parse date of birth
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate localDate = LocalDate.parse(dobField.getText(), formatter);
+            Date dateOfBirth = Date.valueOf(localDate);
+
+            // Get year of study as integer (convert "1st Year" to 1, etc.)
+            String yearText = yearMenuButton.getText().replace("st Year", "")
+                    .replace("nd Year", "")
+                    .replace("rd Year", "")
+                    .replace("th Year", "");
+            int yearOfStudy = Integer.parseInt(yearText);
+
+            // Get course of study
+            String courseOfStudy = courseMenuButton.getText();
+
+            // Call the database connection to register the user
+            DatabaseConnection.signUp(
+                    event,
+                    firstNameField.getText(),
+                    lastNameField.getText(),
+                    dateOfBirth,
+                    yearOfStudy,
+                    courseOfStudy,
+                    usernameField.getText(),
+                    passwordField.getText()
+            );
+
+        } catch (DateTimeParseException e) {
+            showAlert("Invalid date format. Please use YYYY-MM-DD format.", Alert.AlertType.ERROR);
+        } catch (NumberFormatException e) {
+            showAlert("Invalid year of study.", Alert.AlertType.ERROR);
+        } catch (Exception e) {
+            showAlert("Registration error: " + e.getMessage(), Alert.AlertType.ERROR);
+            e.printStackTrace();
+        }
+    }
+
+    private boolean validateFields() {
+        return !firstNameField.getText().trim().isEmpty() &&
+                !lastNameField.getText().trim().isEmpty() &&
+                !dobField.getText().trim().isEmpty() &&
+                !courseMenuButton.getText().equals("Select Course") &&
+                !yearMenuButton.getText().equals("Select Year") &&
+                !usernameField.getText().trim().isEmpty() &&
+                !passwordField.getText().trim().isEmpty() &&
+                !confirmPasswordField.getText().trim().isEmpty();
     }
 
     private void showAlert(String message, Alert.AlertType alertType) {
